@@ -10,14 +10,34 @@ const { v4: uuidv4 } = require('uuid');
 const User = require('./models/User');
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 
+// const app = express();
+// const server = http.createServer(app);
+// const io = new Server(server, {
+//     cors: { origin: process.env.FRONTEND_URL || "http://localhost:5173", methods: ["GET", "POST"] } // Assuming Vite frontend
+// });
+
+// app.use(cors());
+// app.use(express.json());
+
 const app = express();
 const server = http.createServer(app);
+
+// --- 1. Define the VIP List (CORS Rules) ---
+const corsOptions = {
+    origin: process.env.FRONTEND_URL || "http://localhost:5173",
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    credentials: true,
+};
+
+// --- 2. Apply to Express (For API routes like /login and /summarize-chat) ---
+app.use(cors(corsOptions));
+app.use(express.json());
+
+// --- 3. Apply to Socket.IO (For real-time messages) ---
 const io = new Server(server, {
-    cors: { origin: "http://localhost:5173", methods: ["GET", "POST"] } // Assuming Vite frontend
+    cors: corsOptions
 });
 
-app.use(cors());
-app.use(express.json());
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGO_URI)
