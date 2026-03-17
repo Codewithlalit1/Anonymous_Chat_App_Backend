@@ -78,6 +78,11 @@ app.get('/generate-room', (req, res) => {
     res.json({ roomId });
 });
 
+// --- Health Check Endpoint for Cron Jobs ---
+app.get('/ping', (req, res) => {
+    res.status(200).json({ message: 'Pong! Server is awake.' });
+});
+
 // --- AI Summarization Route ---
 app.post('/summarize-chat', async (req, res) => {
     try {
