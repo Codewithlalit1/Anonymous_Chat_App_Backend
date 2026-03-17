@@ -7,7 +7,7 @@ const { Server } = require('socket.io');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { v4: uuidv4 } = require('uuid');
-const User = require('./models/User');
+const User = require('./models/user.js');
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 
 // const app = express();
